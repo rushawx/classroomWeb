@@ -11,3 +11,16 @@ services:
       - POSTGRES_DB=${PG_DATABASE}
     volumes:
       - ./init/pg/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: /usr/bin/pg_isready
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  web:
+    build: fastApiApp
+    ports:
+      - "8000:8000"
+    depends_on:
+      pg:
+        condition: service_healthy
