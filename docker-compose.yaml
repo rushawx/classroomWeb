@@ -1,0 +1,26 @@
+services:
+  # web:
+  #   build: fastApiApp
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - "8000:8000"
+
+  pg:
+    image: postgres:latest
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=${PG_PASSWORD}
+      - POSTGRES_USER=${PG_USER}
+      - POSTGRES_DB=${PG_DATABASE}
+    healthcheck:
+      test: /usr/bin/pg_isready
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    restart: unless-stopped
+    volumes:
+      - ./init-files/postgres:/docker-entrypoint-initdb.d
