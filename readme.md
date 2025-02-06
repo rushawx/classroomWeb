@@ -64,7 +64,7 @@ services:
 Пропишем скрипт на SQL, который будет запускаться каждый раз при поднятии контейнера
 
 ```sql
-// ./init/pg/init.sql
+-- ./init/pg/init.sql
 
 create extension if not exists "uuid-ossp";
 
